@@ -1,3 +1,5 @@
+import random
+
 # Global Variables
 quit = False
 puzzle = [['a', 'b', 'c', 'd'],
@@ -10,7 +12,7 @@ vertical_index = 3
 
 
 def print_menu():
-    print('\n********* PY-PUZZLE *********\n')
+    print('\n----------- pyPuzzle! -----------\n')
     print(puzzle[0])
     print(puzzle[1])
     print(puzzle[2])
@@ -28,24 +30,52 @@ if __name__ == '__main__':
         print_menu()
         command = int(input("\nEnter command: "))
         if command == 1:
-            tmp = puzzle[vertical_index][horizontal_index - 1]
-            puzzle[vertical_index][horizontal_index - 1] = puzzle[vertical_index][horizontal_index]
-            puzzle[vertical_index][horizontal_index] = tmp
-            horizontal_index -= 1
+            new_index = horizontal_index - 1
+            if new_index < 0:
+                print('--------------')
+                print('ERROR: ')
+                print('Invalid move!')
+                print('--------------')
+            else:
+                tmp = puzzle[vertical_index][new_index]
+                puzzle[vertical_index][new_index] = puzzle[vertical_index][horizontal_index]
+                puzzle[vertical_index][horizontal_index] = tmp
+                horizontal_index = new_index
         elif command == 2:
-            tmp = puzzle[vertical_index][horizontal_index + 1]
-            puzzle[vertical_index][horizontal_index + 1] = puzzle[vertical_index][horizontal_index]
-            puzzle[vertical_index][horizontal_index] = tmp
-            horizontal_index += 1
+            new_index = horizontal_index + 1
+            if new_index > 3:
+                print('--------------')
+                print('ERROR: ')
+                print('Invalid move!')
+                print('--------------')
+            else:
+                tmp = puzzle[vertical_index][new_index]
+                puzzle[vertical_index][new_index] = puzzle[vertical_index][horizontal_index]
+                puzzle[vertical_index][horizontal_index] = tmp
+                horizontal_index = new_index
         elif command == 3:
-            tmp = puzzle[vertical_index - 1][horizontal_index]
-            puzzle[vertical_index - 1][horizontal_index] = puzzle[vertical_index][horizontal_index]
-            puzzle[vertical_index][horizontal_index] = tmp
-            vertical_index -= 1
+            new_index = vertical_index - 1
+            if new_index < 0:
+                print('--------------')
+                print('ERROR: ')
+                print('Invalid move!')
+                print('--------------')
+            else:
+                tmp = puzzle[new_index][horizontal_index]
+                puzzle[new_index][horizontal_index] = puzzle[vertical_index][horizontal_index]
+                puzzle[vertical_index][horizontal_index] = tmp
+                vertical_index = new_index
         elif command == 4:
-            tmp = puzzle[vertical_index + 1][horizontal_index]
-            puzzle[vertical_index + 1][horizontal_index] = puzzle[vertical_index][horizontal_index]
-            puzzle[vertical_index][horizontal_index] = tmp
-            vertical_index += 1
+            new_index = vertical_index + 1
+            if new_index > 3:
+                print('--------------')
+                print('ERROR: ')
+                print('Invalid move!')
+                print('--------------')
+            else:
+                tmp = puzzle[new_index][horizontal_index]
+                puzzle[new_index][horizontal_index] = puzzle[vertical_index][horizontal_index]
+                puzzle[vertical_index][horizontal_index] = tmp
+                vertical_index = new_index
         elif command == 0:
             quit = True
