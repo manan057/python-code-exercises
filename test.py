@@ -2,12 +2,15 @@ import random
 
 # Global Variables
 quit = False
-puzzle = [['a', 'b', 'c'],
-          ['d', 'e', 'f'],
-          ['g', 'h', '*']]
-# We need to know the start position
-# vertical_index = 3
-# horizontal_index = 3
+# 3x3 puzzle
+easy_puzzle = [['a', 'b', 'c'],
+               ['d', 'e', 'f'],
+               ['g', 'h', '*']]
+# 4x4 puzzle
+hard_puzzle = [['a', 'b', 'c', 'd'],
+               ['e', 'f', 'g', 'h'],
+               ['i', 'j', 'k', 'l'],
+               ['m', 'n', 'o', '*']]
 
 
 # Generates a new puzzle by shuffling the positions
@@ -25,41 +28,42 @@ def find_position(new_puzzle):
                 return row, col
 
 
-def horizontal_swap(new_index, vertical_index, horizontal_index):
+def horizontal_swap(new_index, vertical_index, horizontal_index, new_puzzle):
     if new_index < 0 or new_index > 3:
         print('--------------')
         print('ERROR: ')
         print('Invalid move!')
         print('--------------')
-        return horizontal_index
+        return vertical_index, horizontal_index
     else:
-        tmp = puzzle[vertical_index][new_index]
-        puzzle[vertical_index][new_index] = puzzle[vertical_index][horizontal_index]
-        puzzle[vertical_index][horizontal_index] = tmp
+        tmp = new_puzzle[vertical_index][new_index]
+        new_puzzle[vertical_index][new_index] = new_puzzle[vertical_index][horizontal_index]
+        new_puzzle[vertical_index][horizontal_index] = tmp
         horizontal_index = new_index
-        return horizontal_index
+        return vertical_index, horizontal_index
 
 
-def vertical_swap(new_index, vertical_index, horizontal_index):
+def vertical_swap(new_index, vertical_index, horizontal_index, new_puzzle):
     if new_index < 0 or new_index > 3:
         print('--------------')
         print('ERROR: ')
         print('Invalid move!')
         print('--------------')
-        return vertical_index
+        return vertical_index, horizontal_index
     else:
-        tmp = puzzle[new_index][horizontal_index]
-        puzzle[new_index][horizontal_index] = puzzle[vertical_index][horizontal_index]
-        puzzle[vertical_index][horizontal_index] = tmp
+        tmp = new_puzzle[new_index][horizontal_index]
+        new_puzzle[new_index][horizontal_index] = new_puzzle[vertical_index][horizontal_index]
+        new_puzzle[vertical_index][horizontal_index] = tmp
         vertical_index = new_index
-        return vertical_index
+        return vertical_index, horizontal_index
 
-def print_menu():
+
+def print_menu(new_puzzle):
     print('\n----------- pyPuzzle! -----------\n')
-    print(puzzle[0])
-    print(puzzle[1])
-    print(puzzle[2])
-    print(puzzle[3])
+    print(new_puzzle[0])
+    print(new_puzzle[1])
+    print(new_puzzle[2])
+    # print(new_puzzle[3])
     print('\nMenu: ')
     print('0. quit')
     print('1. left')
@@ -69,22 +73,22 @@ def print_menu():
 
 
 if __name__ == '__main__':
-    generate_puzzle(puzzle)
-    vertical_index, horizontal_index = find_position(puzzle)
+    generate_puzzle(easy_puzzle)
+    vertical_index, horizontal_index = find_position(easy_puzzle)
     while not quit:
-        print_menu()
+        print_menu(easy_puzzle)
         command = int(input("\nEnter command: "))
         if command == 1:
             new_index = horizontal_index - 1
-            horizontal_index = horizontal_swap(new_index, vertical_index, horizontal_index)
+            vertical_index, horizontal_index = horizontal_swap(new_index, vertical_index, horizontal_index, easy_puzzle)
         elif command == 2:
             new_index = horizontal_index + 1
-            horizontal_index = horizontal_swap(new_index, vertical_index, horizontal_index)
+            vertical_index, horizontal_index = horizontal_swap(new_index, vertical_index, horizontal_index, easy_puzzle)
         elif command == 3:
             new_index = vertical_index - 1
-            vertical_index = vertical_swap(new_index, vertical_index, horizontal_index)
+            vertical_index, horizontal_index = vertical_swap(new_index, vertical_index, horizontal_index, easy_puzzle)
         elif command == 4:
             new_index = vertical_index + 1
-            vertical_index = vertical_swap(new_index, vertical_index, horizontal_index)
+            vertical_index, horizontal_index = vertical_swap(new_index, vertical_index, horizontal_index, easy_puzzle)
         elif command == 0:
             quit = True
