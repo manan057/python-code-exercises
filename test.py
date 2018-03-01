@@ -7,8 +7,23 @@ puzzle = [['a', 'b', 'c', 'd'],
           ['i', 'j', 'k', 'l'],
           ['m', 'n', 'o', '*']]
 # We need to know the start position
-horizontal_index = 3
 vertical_index = 3
+horizontal_index = 3
+
+
+# Generates a new puzzle by shuffling the positions
+def new_puzzle(puzzle):
+    for row in puzzle:
+        random.shuffle(row)
+    random.shuffle(new_puzzle)
+
+
+# Find the starting position
+def find_position(puzzle):
+    for row in range(len(puzzle)):
+        for col in range(len(puzzle[row])):
+            if puzzle[row][col] == '*':
+                return row, col
 
 
 def print_menu():
@@ -26,6 +41,8 @@ def print_menu():
 
 
 if __name__ == '__main__':
+    new_puzzle(puzzle)
+    vertical_index, horizontal_index = find_position(puzzle)
     while not quit:
         print_menu()
         command = int(input("\nEnter command: "))
